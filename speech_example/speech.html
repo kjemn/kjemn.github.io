@@ -45,17 +45,18 @@ new gweb.analytics.AutoTrack({
     text-decoration: none
     }
     #results {
-    overflow-y: scroll;
+    /* overflow-y: scroll;
     height: 150px;
     position: absolute;
-    bottom: 0;
+    bottom: 0; */
     font-size: 14px;
     font-weight: bold;
     border: 1px solid #ddd;
     padding: 15px;
     text-align: left;
-    /* min-height: 150px; */
+    min-height: 150px;
     }
+
     #start_button {
     border: 0;
     background-color:transparent;
@@ -146,7 +147,7 @@ a.c1 {font-weight: normal;}
           "interim_span"></span>
         </div>
         <div id="scroll">
-          <button class="button" id="scroll_button" onclick="scrollButton()">Auto
+          <button onclick="scrollButton()">Auto
             Scroll</button>
         </div>
         <div id="copy">
@@ -417,16 +418,16 @@ if (!('webkitSpeechRecognition' in window)) {
   };
 }
 
-// var scrollenabled = true;
-// var INTERVAL = 1000;
-// var scrolldown = function(){
-//   if (scrollenabled == true) {
-//     let target = document.getElementById('results');
-//     target.scrollIntoView(false);
-//   }
-// }
+var scrollenabled = true;
+var INTERVAL = 1000;
+var scrolldown = function(){
+  if (scrollenabled == true) {
+    let target = document.getElementById('results');
+    target.scrollIntoView(false);
+  }
+}
 
-// setInterval(scrolldown, INTERVAL)        
+setInterval(scrolldown, INTERVAL)        
 // setInterval(autoStart, INTERVAL)
 
 function upgrade() {
@@ -478,9 +479,9 @@ function emailButton() {
   showInfo('');
 }
 
-// function scrollButton() {
-//   scrollenabled = !scrollenabled;
-// }
+function scrollButton() {
+  scrollenabled = !scrollenabled;
+}
 
 function startButton(event) {
   if (recognizing) {
