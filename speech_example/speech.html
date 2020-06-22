@@ -32,7 +32,6 @@ new gweb.analytics.AutoTrack({
         });
     </script>
     <script>
-      autoStart()
       var scrollenabled = true;
       var INTERVAL = 1000;
       var scrolldown = function(){
@@ -423,6 +422,8 @@ if (!('webkitSpeechRecognition' in window)) {
     }
   };
 }
+
+autoStart()
 
 function upgrade() {
   start_button.style.visibility = 'hidden';
