@@ -344,7 +344,7 @@ var final_transcript = '';
 var recognizing = false;
 var ignore_onend;
 var start_timestamp;
-var enableRestart = false;
+// var enableRestart = false;
 if (!('webkitSpeechRecognition' in window)) {
   upgrade();
 } else {
@@ -384,10 +384,10 @@ if (!('webkitSpeechRecognition' in window)) {
 
   recognition.onend = function() {
     recognizing = false;
-    if (enableRestart) {
-      autoStart()
-      return;
-    }
+    // if (enableRestart) {
+    //   autoStart()
+    //   return;
+    // }
     if (ignore_onend) {
       return;
     }
@@ -503,32 +503,32 @@ function startButton(event) {
     recognition.stop();
     return;
   }
-  final_transcript = '';
+  // final_transcript = '';
   recognition.lang = select_dialect.value;
   recognition.start();
   ignore_onend = false;
-  final_span.innerHTML = '';
-  interim_span.innerHTML = '';
+  // final_span.innerHTML = '';
+  // interim_span.innerHTML = '';
   start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic-slash.gif';
   showInfo('info_allow');
   showButtons('none');
   start_timestamp = event.timeStamp;
 }
 
-function autoStart() {
-  if (recognizing==false) {
-    // final_transcript = '';
-    recognition.lang = select_dialect.value;
-    recognition.start();
-    // ignore_onend = false;
-    // final_span.innerHTML = '';
-    // interim_span.innerHTML = '';
-    // start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic-slash.gif';
-    showInfo('info_allow');
-    showButtons('none');
-    start_timestamp = Date.now();
-  }
-}
+// function autoStart() {
+//   if (recognizing==false) {
+//     // final_transcript = '';
+//     recognition.lang = select_dialect.value;
+//     recognition.start();
+//     // ignore_onend = false;
+//     // final_span.innerHTML = '';
+//     // interim_span.innerHTML = '';
+//     // start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic-slash.gif';
+//     showInfo('info_allow');
+//     showButtons('none');
+//     start_timestamp = Date.now();
+//   }
+// }
 
 function showInfo(s) {
   if (s) {
