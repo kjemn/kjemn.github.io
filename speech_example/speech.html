@@ -31,17 +31,6 @@ new gweb.analytics.AutoTrack({
           profile: 'UA-26908291-1'
         });
     </script>
-    <script>
-      var scrollenabled = true;
-      var INTERVAL = 1000;
-      var scrolldown = function(){
-        let target = document.getElementById('results');
-        target.scrollIntoView(false);
-      }
-      if (scrollenabled == true & recognition) {
-          setInterval(scrolldown, INTERVAL)        
-        }
-    </script>
     <style>
 #marquee h1 {
   font-size: 16px;
@@ -173,8 +162,9 @@ a.c1 {font-weight: normal;}
               (See chrome://settings/handlers to change.)
             </p>
           </div>
-          <button class="button" id="scroll_button" onclick="scrollButton()">Auto Scroll</button>
         </div>
+        <button class="button" id="scroll_button" onclick="scrollButton()">Auto
+          Scroll</button>
         <div class="compact marquee" id="div_language">
           <select id="select_language" onchange="updateCountry()">
             </select>&nbsp;&nbsp; <select id="select_dialect">
@@ -423,7 +413,19 @@ if (!('webkitSpeechRecognition' in window)) {
   };
 }
 
-autoStart()
+var scrollenabled = true;
+var INTERVAL = 1000;
+var scrolldown = function(){
+  let target = document.getElementById('results');
+  target.scrollIntoView(false);
+}
+
+if (scrollenabled == true & recognition) {
+    setInterval(scrolldown, INTERVAL)        
+  }
+
+setInterval(autoStart, INTERVAL)
+
 
 function upgrade() {
   start_button.style.visibility = 'hidden';
