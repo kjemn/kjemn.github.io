@@ -38,24 +38,24 @@ new gweb.analytics.AutoTrack({
 #info {
     font-size: 16px;
     }
-    #div_start {
+    /* #div_start {
     float: right;
-    }
+    } */
     #headline {
     text-decoration: none
     }
     #results {
-    /* overflow-y: scroll;
-    height: 150px;
-    position: absolute;
+    height: 300px;
+    /* position: absolute;
     bottom: 0; */
+    overflow-y: hidden;
     position : relative;
     font-size: 14px;
     font-weight: bold;
     border: 1px solid #ddd;
     padding: 15px;
     text-align: left;
-    min-height: 150px;
+    /* min-height: 150px; */
     }
 
     #results-wrapper{
@@ -145,20 +145,20 @@ a.c1 {font-weight: normal;}
             "//www.google.com/chrome">Chrome</a> version 25 or later.
           </p>
         </div>
-        <div id="div_start">
-          <button id="start_button" onclick="startButton(event)"><img alt="Start" id="start_img"
-            src="//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"></button>
-        </div>
         <div id="results">
           <div id="results-wrapper">
             <span class="final" id="final_span"></span> <span class="interim" id=
             "interim_span"></span>  
           </div>
         </div>
-        <div id="scroll">
+        <div id="div_start">
+          <button id="start_button" onclick="startButton(event)"><img alt="Start" id="start_img"
+            src="//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"></button>
+        </div>
+        <!-- <div id="scroll">
           <button onclick="scrollButton()">Auto
             Scroll</button>
-        </div>
+        </div> -->
         <div id="copy">
           <button class="button" id="copy_button" onclick="copyButton()">Copy and Paste</button>
           <div id="copy_info">
@@ -427,16 +427,16 @@ if (!('webkitSpeechRecognition' in window)) {
   };
 }
 
-var scrollenabled = true;
-var INTERVAL = 1000;
-var scrolldown = function(){
-  if (scrollenabled == true) {
-    let target = document.getElementById('results');
-    target.scrollIntoView(false);
-  }
-}
-
-setInterval(scrolldown, INTERVAL)        
+// var scrollenabled = true;
+// var INTERVAL = 1000;
+// var scrolldown = function(){
+//   if (scrollenabled == true) {
+//     let target = document.getElementById('results');
+//     target.scrollIntoView(false);
+//   }
+// }
+// 
+// setInterval(scrolldown, INTERVAL)        
 // setInterval(autoStart, INTERVAL)
 
 function upgrade() {
@@ -488,9 +488,9 @@ function emailButton() {
   showInfo('');
 }
 
-function scrollButton() {
-  scrollenabled = !scrollenabled;
-}
+// function scrollButton() {
+//   scrollenabled = !scrollenabled;
+// }
 
 function startButton(event) {
   if (recognizing) {
