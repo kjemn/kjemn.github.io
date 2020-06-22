@@ -32,12 +32,16 @@ new gweb.analytics.AutoTrack({
         });
     </script>
     <script>
+      autoStart()
+      var scrollenabled = true;
       var INTERVAL = 1000;
       var scrolldown = function(){
         let target = document.getElementById('results');
         target.scrollIntoView(false);
       }
-      setInterval(scrolldown, INTERVAL)
+      if (scrollenabled == true & recognition) {
+          setInterval(scrolldown, INTERVAL)        
+        }
     </script>
     <style>
 #marquee h1 {
@@ -170,6 +174,7 @@ a.c1 {font-weight: normal;}
               (See chrome://settings/handlers to change.)
             </p>
           </div>
+          <button class="button" id="scroll_button" onclick="scrollButton()">Auto Scroll</button>
         </div>
         <div class="compact marquee" id="div_language">
           <select id="select_language" onchange="updateCountry()">
@@ -468,6 +473,10 @@ function emailButton() {
   showInfo('');
 }
 
+function scrollButton() {
+  scrollenabled = !scrollenabled;
+}
+
 function startButton(event) {
   if (recognizing) {
     recognition.stop();
@@ -483,6 +492,21 @@ function startButton(event) {
   showInfo('info_allow');
   showButtons('none');
   start_timestamp = event.timeStamp;
+}
+
+function autoStart() {
+  if (recognizing==false) {
+    // final_transcript = '';
+    recognition.lang = select_dialect.value;
+    recognition.start();
+    // ignore_onend = false;
+    // final_span.innerHTML = '';
+    // interim_span.innerHTML = '';
+    // start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic-slash.gif';
+    showInfo('info_allow');
+    showButtons('none');
+    start_timestamp = event.timeStamp;
+  }
 }
 
 function showInfo(s) {
