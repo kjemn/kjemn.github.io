@@ -2,4 +2,4 @@
 
 [kjemn.github.io/speech-to-text-webcam-overlay/](https://kjemn.github.io/speech-to-text-webcam-overlay/)
 
-[kjemn.github.io/speech_recognition/](https://kjemn.github.io/speech_recognition/)
+[kjemn.github.io/speech-recognition/](https://kjemn.github.io/speech-recognition/)
