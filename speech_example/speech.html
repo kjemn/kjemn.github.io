@@ -57,6 +57,12 @@ new gweb.analytics.AutoTrack({
     min-height: 150px;
     }
 
+    #results-wrapper{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    }
+    
     #start_button {
     border: 0;
     background-color:transparent;
@@ -143,8 +149,10 @@ a.c1 {font-weight: normal;}
             src="//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"></button>
         </div>
         <div id="results">
-          <span class="final" id="final_span"></span> <span class="interim" id=
-          "interim_span"></span>
+          <div id="results-wrapper">
+            <span class="final" id="final_span"></span> <span class="interim" id=
+            "interim_span"></span>  
+          </div>
         </div>
         <div id="scroll">
           <button onclick="scrollButton()">Auto
