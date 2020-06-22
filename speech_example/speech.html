@@ -143,6 +143,10 @@ a.c1 {font-weight: normal;}
           <span class="final" id="final_span"></span> <span class="interim" id=
           "interim_span"></span>
         </div>
+        <div id="scroll">
+          <button class="button" id="scroll_button" onclick="scrollButton()">Auto
+            Scroll</button>
+        </div>
         <div id="copy">
           <button class="button" id="copy_button" onclick="copyButton()">Copy and Paste</button>
           <div id="copy_info">
@@ -163,8 +167,6 @@ a.c1 {font-weight: normal;}
             </p>
           </div>
         </div>
-        <button class="button" id="scroll_button" onclick="scrollButton()">Auto
-          Scroll</button>
         <div class="compact marquee" id="div_language">
           <select id="select_language" onchange="updateCountry()">
             </select>&nbsp;&nbsp; <select id="select_dialect">
@@ -416,16 +418,14 @@ if (!('webkitSpeechRecognition' in window)) {
 var scrollenabled = true;
 var INTERVAL = 1000;
 var scrolldown = function(){
-  let target = document.getElementById('results');
-  target.scrollIntoView(false);
+  if (scrollenabled == true) {
+    let target = document.getElementById('results');
+    target.scrollIntoView(false);
+  }
 }
 
-if (scrollenabled == true & recognition) {
-    setInterval(scrolldown, INTERVAL)        
-  }
-
+setInterval(scrolldown, INTERVAL)        
 setInterval(autoStart, INTERVAL)
-
 
 function upgrade() {
   start_button.style.visibility = 'hidden';
@@ -508,7 +508,7 @@ function autoStart() {
     // start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic-slash.gif';
     showInfo('info_allow');
     showButtons('none');
-    start_timestamp = event.timeStamp;
+    start_timestamp = Date.now();
   }
 }
 
