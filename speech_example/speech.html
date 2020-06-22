@@ -31,6 +31,9 @@ new gweb.analytics.AutoTrack({
         });
     </script>
     <style>
+h1 {
+  font-size: 16px;
+}
 #info {
     font-size: 16px;
     }
@@ -91,8 +94,8 @@ a.c1 {font-weight: normal;}
       <div class="compact marquee-stacked" id="marquee">
         <div class="marquee-copy">
           <h1>
-            <a class="c1" href="http://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html">Web
-            Speech API</a> Demonstration
+            Speech recognition Powered by <a class="c1" href="https://wicg.github.io/speech-api/">Web
+            Speech API</a>
           </h1>
         </div>
       </div>
@@ -333,7 +336,8 @@ if (!('webkitSpeechRecognition' in window)) {
   recognition.onstart = function() {
     recognizing = true;
     showInfo('info_speak_now');
-    start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic-animate.gif';
+    // start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic-animate.gif';
+    start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
   };
 
   recognition.onerror = function(event) {
