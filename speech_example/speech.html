@@ -35,7 +35,7 @@ new gweb.analytics.AutoTrack({
       var INTERVAL = 1000;
       var scrolldown = function(){
         let target = document.getElementById('results');
-        target.scroll(false);
+        target.scrollIntoView(false);
       }
       setInterval(scrolldown, INTERVAL)
     </script>
