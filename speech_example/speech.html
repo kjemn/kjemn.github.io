@@ -359,26 +359,27 @@ if (!('webkitSpeechRecognition' in window)) {
     start_img.src = '//kjemn.github.io/speech_example/img/mic-red.gif';
   };
 
-  recognition.onerror = function(event) {
-    if (event.error == 'no-speech') {
-      start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
-      showInfo('info_no_speech');
-      // ignore_onend = true;
-    }
-    if (event.error == 'audio-capture') {
-      start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
-      showInfo('info_no_microphone');
-      ignore_onend = true;
-    }
-    if (event.error == 'not-allowed') {
-      if (event.timeStamp - start_timestamp < 100) {
-        showInfo('info_blocked');
-      } else {
-        showInfo('info_denied');
-      }
-      ignore_onend = true;
-    }
-  };
+  // recognition.onerror = function(event) {
+  //   if (event.error == 'no-speech') {
+  //     start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
+  //     showInfo('info_no_speech');
+  //     ignore_onend = true;
+  //     autoStart()
+  //   }
+  //   if (event.error == 'audio-capture') {
+  //     start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
+  //     showInfo('info_no_microphone');
+  //     ignore_onend = true;
+  //   }
+  //   if (event.error == 'not-allowed') {
+  //     if (event.timeStamp - start_timestamp < 100) {
+  //       showInfo('info_blocked');
+  //     } else {
+  //       showInfo('info_denied');
+  //     }
+  //     ignore_onend = true;
+  //   }
+  // };
 
   recognition.onend = function() {
     recognizing = false;
@@ -509,20 +510,20 @@ function startButton(event) {
   start_timestamp = event.timeStamp;
 }
 
-// function autoStart() {
-//   if (recognizing==false) {
-//     // final_transcript = '';
-//     recognition.lang = select_dialect.value;
-//     recognition.start();
-//     // ignore_onend = false;
-//     // final_span.innerHTML = '';
-//     // interim_span.innerHTML = '';
-//     // start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic-slash.gif';
-//     showInfo('info_allow');
-//     showButtons('none');
-//     start_timestamp = Date.now();
-//   }
-// }
+function autoStart() {
+  if (recognizing==false) {
+    // final_transcript = '';
+    recognition.lang = select_dialect.value;
+    recognition.start();
+    // ignore_onend = false;
+    // final_span.innerHTML = '';
+    // interim_span.innerHTML = '';
+    // start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic-slash.gif';
+    showInfo('info_allow');
+    showButtons('none');
+    start_timestamp = Date.now();
+  }
+}
 
 function showInfo(s) {
   if (s) {
