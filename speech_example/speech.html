@@ -32,8 +32,12 @@ new gweb.analytics.AutoTrack({
         });
     </script>
     <script>
-      let target = document.getElementById('results');
-      target.scroll(false);
+      var INTERVAL = 1000;
+      var scrolldown = function(){
+        let target = document.getElementById('results');
+        target.scroll(false);
+      }
+      setInterval(scrolldown, INTERVAL)
     </script>
     <style>
 #marquee h1 {
