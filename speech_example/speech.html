@@ -31,6 +31,10 @@ new gweb.analytics.AutoTrack({
           profile: 'UA-26908291-1'
         });
     </script>
+    <script>
+      let target = document.getElementById('results');
+      target.scrollIntoView(false);
+    </script>
     <style>
 #marquee h1 {
   font-size: 16px;
@@ -45,12 +49,14 @@ new gweb.analytics.AutoTrack({
     text-decoration: none
     }
     #results {
+    overflow-y: scroll;
+    height: 150px;
     font-size: 14px;
     font-weight: bold;
     border: 1px solid #ddd;
     padding: 15px;
     text-align: left;
-    min-height: 150px;
+    /* min-height: 150px; */
     }
     #start_button {
     border: 0;
