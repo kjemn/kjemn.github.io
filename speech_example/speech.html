@@ -386,6 +386,7 @@ if (!('webkitSpeechRecognition' in window)) {
     recognizing = false;
     if (enableRestart) {
       autoStart()
+      return;
     }
     if (ignore_onend) {
       return;
