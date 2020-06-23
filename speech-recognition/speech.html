@@ -387,38 +387,47 @@ if (!('webkitSpeechRecognition' in window)) {
   };
 
   recognition.onend = function() {
-    // console.log("recognition.onend") // DEBUG
+    console.log("recognition.onend") // DEBUG
     recognizing = false;
     past_transcript += final_transcript;
+    past_transcript += interim_span.innerHTML;
     past_span.innerHTML = linebreak(past_transcript);
     final_span.innerHTML = '';
     interim_span.innerHTML = '';
-    final_transcript = '';
+    // if (interim_span.innerHTML) {
+    //   past_span.innerHTML += interim_span.innerHTML;
+    //   interim_span.innerHTML = '';
+    // }  
     if (ignore_onend) {
-    //   console.log("ignore_onend") // DEBUG
+      console.log("ignore_onend") // DEBUG
       return;
     }
     start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
     if (!final_transcript) {
       showInfo('info_start');
-    //   console.log("!final_transcript") // DEBUG
+      console.log("!final_transcript") // DEBUG
       return;
     }
     showInfo('');
-    if (window.getSelection) {
-      window.getSelection().removeAllRanges();
-      var range = document.createRange();
-      range.selectNode(document.getElementById('final_span'));
-      window.getSelection().addRange(range);
-    }
-    if (create_email) {
-      create_email = false;
-      createEmail();
-    }
     if (enableRestart) {
-    //   console.log("enableRestart") // DEBUG
+      console.log("enableRestart") // DEBUG
       autoStart()
     }
+    if (!enableRestart) {
+      console.log("!enableRestart") // DEBUG
+      if (window.getSelection) {
+        console.log("window.getSelection") // DEBUG
+        window.getSelection().removeAllRanges();
+        var range = document.createRange();
+        range.selectNode(document.getElementById('past_span'));
+        window.getSelection().addRange(range);
+      }
+      if (create_email) {
+        create_email = false;
+        createEmail();
+      }
+    }
+    final_transcript = '';
   };
 
   recognition.onresult = function(event) {
@@ -474,12 +483,12 @@ function capitalize(s) {
 }
 
 function createEmail() {
-  var n = final_transcript.indexOf('\n');
+  var n = past_transcript.indexOf('\n');
   if (n < 0 || n >= 80) {
-    n = 40 + final_transcript.substring(40).indexOf(' ');
+    n = 40 + past_transcript.substring(40).indexOf(' ');
   }
-  var subject = encodeURI(final_transcript.substring(0, n));
-  var body = encodeURI(final_transcript.substring(n + 1));
+  var subject = encodeURI(past_transcript.substring(0, n));
+  var body = encodeURI(past_transcript.substring(n + 1));
   window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
 }
 
@@ -488,6 +497,7 @@ function copyButton() {
     recognizing = false;
     recognition.stop();
   }
+  selectAllTexts()
 //   copy_button.style.display = 'none';
 //   copy_info.style.display = 'inline-block';
   showInfo('');
@@ -506,6 +516,12 @@ function emailButton() {
   showInfo('');
 }
 
+function selectAllTexts() {
+  window.getSelection().removeAllRanges();
+  var range = document.createRange();
+  range.selectNode(document.getElementById('past_span'));
+  window.getSelection().addRange(range);
+}
 // function scrollButton() {
 //   scrollenabled = !scrollenabled;
 // }
@@ -538,6 +554,7 @@ function autoStart() {
     // final_transcript = '';
     recognition.lang = select_dialect.value;
     recognition.start();
+    enableRestart = true
     // ignore_onend = false;
     // final_span.innerHTML = '';
     // interim_span.innerHTML = '';
