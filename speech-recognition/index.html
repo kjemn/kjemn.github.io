@@ -392,7 +392,10 @@ if (!('webkitSpeechRecognition' in window)) {
     past_transcript += final_transcript;
     past_span.innerHTML = linebreak(past_transcript);
     final_span.innerHTML = '';
-    interim_span.innerHTML = '';
+    if (interim_span.innerHTML) {
+      past_span.innerHTML += interim_span.innerHTML;
+      interim_span.innerHTML = '';
+    }  
     if (ignore_onend) {
       // console.log("ignore_onend") // DEBUG
       return;
