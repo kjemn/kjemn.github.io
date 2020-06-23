@@ -387,7 +387,7 @@ if (!('webkitSpeechRecognition' in window)) {
   };
 
   recognition.onend = function() {
-    // console.log("recognition.onend") // DEBUG
+    console.log("recognition.onend") // DEBUG
     recognizing = false;
     past_transcript += final_transcript;
     past_span.innerHTML = linebreak(past_transcript);
@@ -395,13 +395,13 @@ if (!('webkitSpeechRecognition' in window)) {
     interim_span.innerHTML = '';
     final_transcript = '';
     if (ignore_onend) {
-    //   console.log("ignore_onend") // DEBUG
+      console.log("ignore_onend") // DEBUG
       return;
     }
     start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
     if (!final_transcript) {
       showInfo('info_start');
-    //   console.log("!final_transcript") // DEBUG
+      console.log("!final_transcript") // DEBUG
       return;
     }
     showInfo('');
@@ -416,7 +416,7 @@ if (!('webkitSpeechRecognition' in window)) {
       createEmail();
     }
     if (enableRestart) {
-    //   console.log("enableRestart") // DEBUG
+      console.log("enableRestart") // DEBUG
       autoStart()
     }
   };
@@ -538,6 +538,7 @@ function autoStart() {
     // final_transcript = '';
     recognition.lang = select_dialect.value;
     recognition.start();
+    enableRestart = true
     // ignore_onend = false;
     // final_span.innerHTML = '';
     // interim_span.innerHTML = '';
