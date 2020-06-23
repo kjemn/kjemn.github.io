@@ -149,7 +149,7 @@ a.c1 {font-weight: normal;}
         </div>
         <div id="results">
           <div id="results-wrapper">
-            <span class="final" id="final_span"></span> <span class="interim" id=
+            <span class="final" id="past_span"> </span><span class="final" id="final_span"></span> <span class="interim" id=
             "interim_span"></span>  
           </div>
         </div>
@@ -343,10 +343,12 @@ function updateCountry() {
 
 var create_email = false;
 var final_transcript = '';
+var past_transcript = '';
 var recognizing = false;
 var ignore_onend;
 var start_timestamp;
-// var enableRestart = false;
+var enableRestart = true;
+
 if (!('webkitSpeechRecognition' in window)) {
   upgrade();
 } else {
@@ -385,17 +387,21 @@ if (!('webkitSpeechRecognition' in window)) {
   };
 
   recognition.onend = function() {
+    // console.log("recognition.onend") // DEBUG
     recognizing = false;
-    // if (enableRestart) {
-    //   autoStart()
-    //   return;
-    // }
+    past_transcript += final_transcript;
+    past_span.innerHTML = linebreak(past_transcript);
+    final_span.innerHTML = '';
+    interim_span.innerHTML = '';
+    final_transcript = '';
     if (ignore_onend) {
+    //   console.log("ignore_onend") // DEBUG
       return;
     }
     start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
     if (!final_transcript) {
       showInfo('info_start');
+    //   console.log("!final_transcript") // DEBUG
       return;
     }
     showInfo('');
@@ -408,6 +414,10 @@ if (!('webkitSpeechRecognition' in window)) {
     if (create_email) {
       create_email = false;
       createEmail();
+    }
+    if (enableRestart) {
+    //   console.log("enableRestart") // DEBUG
+      autoStart()
     }
   };
 
@@ -478,8 +488,8 @@ function copyButton() {
     recognizing = false;
     recognition.stop();
   }
-  copy_button.style.display = 'none';
-  copy_info.style.display = 'inline-block';
+//   copy_button.style.display = 'none';
+//   copy_info.style.display = 'inline-block';
   showInfo('');
 }
 
@@ -491,8 +501,8 @@ function emailButton() {
   } else {
     createEmail();
   }
-  email_button.style.display = 'none';
-  email_info.style.display = 'inline-block';
+//   email_button.style.display = 'none';
+//   email_info.style.display = 'inline-block';
   showInfo('');
 }
 
@@ -502,12 +512,16 @@ function emailButton() {
 
 function startButton(event) {
   if (recognizing) {
+    enableRestart = false
     recognition.stop();
     return;
   }
-  // final_transcript = '';
+//   past_transcript += final_transcript;
+//   past_span.innerHTML = linebreak(past_transcript);
+//   final_transcript = '';
   recognition.lang = select_dialect.value;
   recognition.start();
+  enableRestart = true
   ignore_onend = false;
   // final_span.innerHTML = '';
   // interim_span.innerHTML = '';
@@ -517,20 +531,22 @@ function startButton(event) {
   start_timestamp = event.timeStamp;
 }
 
-// function autoStart() {
-//   if (recognizing==false) {
-//     // final_transcript = '';
-//     recognition.lang = select_dialect.value;
-//     recognition.start();
-//     // ignore_onend = false;
-//     // final_span.innerHTML = '';
-//     // interim_span.innerHTML = '';
-//     // start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic-slash.gif';
-//     showInfo('info_allow');
-//     showButtons('none');
-//     start_timestamp = Date.now();
-//   }
-// }
+function autoStart() {
+  if (recognizing==false) {
+    // past_transcript += final_transcript;
+    // past_span.innerHTML = linebreak(past_transcript);
+    // final_transcript = '';
+    recognition.lang = select_dialect.value;
+    recognition.start();
+    // ignore_onend = false;
+    // final_span.innerHTML = '';
+    // interim_span.innerHTML = '';
+    // start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic-slash.gif';
+    showInfo('info_allow');
+    showButtons('none');
+    start_timestamp = Date.now();
+  }
+}
 
 function showInfo(s) {
   if (s) {
