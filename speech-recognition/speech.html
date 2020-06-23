@@ -390,12 +390,10 @@ if (!('webkitSpeechRecognition' in window)) {
     // console.log("recognition.onend") // DEBUG
     recognizing = false;
     past_transcript += final_transcript;
-    past_transcript += capitalize(interim_transcript);
     past_span.innerHTML = linebreak(past_transcript);
     final_span.innerHTML = '';
     interim_span.innerHTML = '';
     final_transcript = '';
-    interim_transcript = '';
     if (ignore_onend) {
     //   console.log("ignore_onend") // DEBUG
       return;
