@@ -157,10 +157,6 @@ a.c1 {font-weight: normal;}
           <button id="start_button" onclick="startButton(event)"><img alt="Start" id="start_img"
             src="//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"></button>
         </div>
-        <!-- <div id="scroll">
-          <button onclick="scrollButton()">Auto
-            Scroll</button>
-        </div> -->
         <div id="copy">
           <button class="button" id="copy_button" onclick="copyButton()">Copy and Paste</button>
           <div id="copy_info">
@@ -360,7 +356,6 @@ if (!('webkitSpeechRecognition' in window)) {
   recognition.onstart = function() {
     recognizing = true;
     showInfo('info_speak_now');
-    // start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic-animate.gif';
     start_img.src = '//kjemn.github.io/speech-recognition/img/mic-red.gif';
   };
 
@@ -387,36 +382,26 @@ if (!('webkitSpeechRecognition' in window)) {
   };
 
   recognition.onend = function() {
-    // console.log("recognition.onend") // DEBUG
     recognizing = false;
     past_transcript += final_transcript;
     past_transcript += interim_span.innerHTML;
     past_span.innerHTML = linebreak(past_transcript);
     final_span.innerHTML = '';
     interim_span.innerHTML = '';
-    // if (interim_span.innerHTML) {
-    //   past_span.innerHTML += interim_span.innerHTML;
-    //   interim_span.innerHTML = '';
-    // }  
     if (ignore_onend) {
-      // console.log("ignore_onend") // DEBUG
       return;
     }
     start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
     if (!final_transcript) {
       showInfo('info_start');
-      // console.log("!final_transcript") // DEBUG
       return;
     }
     showInfo('');
     if (enableRestart) {
-      // console.log("enableRestart") // DEBUG
       autoStart()
     }
     if (!enableRestart) {
-      // console.log("!enableRestart") // DEBUG
       if (window.getSelection) {
-        // console.log("window.getSelection") // DEBUG
         window.getSelection().removeAllRanges();
         var range = document.createRange();
         range.selectNode(document.getElementById('past_span'));
@@ -454,18 +439,6 @@ if (!('webkitSpeechRecognition' in window)) {
   };
 }
 
-// var scrollenabled = true;
-// var INTERVAL = 1000;
-// var scrolldown = function(){
-//   if (scrollenabled == true) {
-//     let target = document.getElementById('results');
-//     target.scrollIntoView(false);
-//   }
-// }
-// 
-// setInterval(scrolldown, INTERVAL)        
-// setInterval(autoStart, INTERVAL)
-
 function upgrade() {
   start_button.style.visibility = 'hidden';
   showInfo('info_upgrade');
@@ -498,8 +471,6 @@ function copyButton() {
     recognition.stop();
   }
   selectAllTexts()
-//   copy_button.style.display = 'none';
-//   copy_info.style.display = 'inline-block';
   showInfo('');
 }
 
@@ -511,8 +482,6 @@ function emailButton() {
   } else {
     createEmail();
   }
-//   email_button.style.display = 'none';
-//   email_info.style.display = 'inline-block';
   showInfo('');
 }
 
@@ -522,9 +491,6 @@ function selectAllTexts() {
   range.selectNode(document.getElementById('past_span'));
   window.getSelection().addRange(range);
 }
-// function scrollButton() {
-//   scrollenabled = !scrollenabled;
-// }
 
 function startButton(event) {
   if (recognizing) {
@@ -532,15 +498,10 @@ function startButton(event) {
     recognition.stop();
     return;
   }
-//   past_transcript += final_transcript;
-//   past_span.innerHTML = linebreak(past_transcript);
-//   final_transcript = '';
   recognition.lang = select_dialect.value;
   recognition.start();
   enableRestart = true
   ignore_onend = false;
-  // final_span.innerHTML = '';
-  // interim_span.innerHTML = '';
   start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic-slash.gif';
   showInfo('info_allow');
   showButtons('none');
@@ -549,16 +510,9 @@ function startButton(event) {
 
 function autoStart() {
   if (recognizing==false) {
-    // past_transcript += final_transcript;
-    // past_span.innerHTML = linebreak(past_transcript);
-    // final_transcript = '';
     recognition.lang = select_dialect.value;
     recognition.start();
     enableRestart = true
-    // ignore_onend = false;
-    // final_span.innerHTML = '';
-    // interim_span.innerHTML = '';
-    // start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic-slash.gif';
     showInfo('info_allow');
     showButtons('none');
     start_timestamp = Date.now();
