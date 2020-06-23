@@ -497,6 +497,9 @@ function startButton(event) {
     recognition.stop();
     return;
   }
+  if (window.getSelection) {
+        window.getSelection().removeAllRanges();
+  }
   recognition.lang = select_dialect.value;
   recognition.start();
   enableRestart = true
