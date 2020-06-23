@@ -363,7 +363,6 @@ if (!('webkitSpeechRecognition' in window)) {
     if (event.error == 'no-speech') {
       start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
       showInfo('info_no_speech');
-      // ignore_onend = true;
     }
     if (event.error == 'audio-capture') {
       start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
