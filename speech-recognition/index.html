@@ -404,19 +404,23 @@ if (!('webkitSpeechRecognition' in window)) {
       return;
     }
     showInfo('');
-    if (window.getSelection) {
-      window.getSelection().removeAllRanges();
-      var range = document.createRange();
-      range.selectNode(document.getElementById('final_span'));
-      window.getSelection().addRange(range);
-    }
-    if (create_email) {
-      create_email = false;
-      createEmail();
-    }
     if (enableRestart) {
       console.log("enableRestart") // DEBUG
       autoStart()
+    }
+    if (!enableRestart) {
+      console.log("!enableRestart") // DEBUG
+      if (window.getSelection) {
+        console.log("window.getSelection") // DEBUG
+        window.getSelection().removeAllRanges();
+        var range = document.createRange();
+        range.selectNode(document.getElementById('past_span'));
+        window.getSelection().addRange(range);
+      }
+      if (create_email) {
+        create_email = false;
+        createEmail();
+      }
     }
     final_transcript = '';
   };
@@ -474,12 +478,12 @@ function capitalize(s) {
 }
 
 function createEmail() {
-  var n = final_transcript.indexOf('\n');
+  var n = past_transcript.indexOf('\n');
   if (n < 0 || n >= 80) {
-    n = 40 + final_transcript.substring(40).indexOf(' ');
+    n = 40 + past_transcript.substring(40).indexOf(' ');
   }
-  var subject = encodeURI(final_transcript.substring(0, n));
-  var body = encodeURI(final_transcript.substring(n + 1));
+  var subject = encodeURI(past_transcript.substring(0, n));
+  var body = encodeURI(past_transcript.substring(n + 1));
   window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
 }
 
