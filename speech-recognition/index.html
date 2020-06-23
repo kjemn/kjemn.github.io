@@ -391,7 +391,7 @@ if (!('webkitSpeechRecognition' in window)) {
       return;
     }
     start_img.src = '//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
-    if (!final_transcript) {
+    if (!past_transcript) {
       showInfo('info_start');
       return;
     }
