@@ -388,11 +388,15 @@ if (!('webkitSpeechRecognition' in window)) {
   recognition.onend = function() {
     console.log("recognition.onend") // DEBUG
     recognizing = false;
+    if (interim_span.innerHTML) {
+      final_transcript += interim_span.innerHTML + '.';
+      final_transcript = capitalize(final_transcript);
+      final_span.innerHTML = linebreak(final_transcript);
+      interim_span.innerHTML = '';
+    }
     past_transcript += final_transcript;
-    past_transcript += interim_span.innerHTML;
     past_span.innerHTML = linebreak(past_transcript);
     final_span.innerHTML = '';
-    interim_span.innerHTML = '';
     // if (interim_span.innerHTML) {
     //   past_span.innerHTML += interim_span.innerHTML;
     //   interim_span.innerHTML = '';
