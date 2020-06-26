@@ -26,6 +26,18 @@
     <link href="//kjemn.github.io/speech-recognition/css/chrome.min.css" rel="stylesheet">
     <script src="//www.google.com/js/gweb/analytics/autotrack.js" nonce="kzUwpFpzsYclJ72I1Sw5Mg">
 </script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+// 結果の翻訳機能を追加
+// 参考: https://pisuke-code.com/js-usage-of-google-trans-api/
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({ 
+            pageLanguage: 'en', 
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+}
+</script>
+
     <script nonce="kzUwpFpzsYclJ72I1Sw5Mg">
 new gweb.analytics.AutoTrack({
           profile: 'UA-26908291-1'
@@ -44,7 +56,7 @@ new gweb.analytics.AutoTrack({
     #headline {
     text-decoration: none
     }
-    #results {
+    #results #google_translate_element{
     height: 300px;
     /* position: absolute;
     bottom: 0; */
@@ -147,6 +159,7 @@ a.c1 {font-weight: normal;}
             "//www.google.com/chrome">Chrome</a> version 25 or later.
           </p>
         </div>
+        <div id="google_translate_element" class="select_translation selector"></div>
         <div id="results">
           <div id="results-wrapper">
             <span class="final" id="past_span"> </span><span class="final" id="final_span"></span> <span class="interim" id=
@@ -388,15 +401,11 @@ if (!('webkitSpeechRecognition' in window)) {
   recognition.onend = function() {
     console.log("recognition.onend") // DEBUG
     recognizing = false;
-    if (interim_span.innerHTML) {
-      final_transcript += interim_span.innerHTML + '.';
-      final_transcript = capitalize(final_transcript);
-      final_span.innerHTML = linebreak(final_transcript);
-      interim_span.innerHTML = '';
-    }
     past_transcript += final_transcript;
+    past_transcript += interim_span.innerHTML;
     past_span.innerHTML = linebreak(past_transcript);
     final_span.innerHTML = '';
+    interim_span.innerHTML = '';
     // if (interim_span.innerHTML) {
     //   past_span.innerHTML += interim_span.innerHTML;
     //   interim_span.innerHTML = '';
@@ -444,14 +453,12 @@ if (!('webkitSpeechRecognition' in window)) {
     for (var i = event.resultIndex; i < event.results.length; ++i) {
       if (event.results[i].isFinal) {
         final_transcript += event.results[i][0].transcript + '.';
-        final_transcript = capitalize(final_transcript);
-        final_span.innerHTML = linebreak(final_transcript);
       } else {
         interim_transcript += event.results[i][0].transcript;
       }
     }
-    // final_transcript = capitalize(final_transcript);
-    // final_span.innerHTML = linebreak(final_transcript);
+    final_transcript = capitalize(final_transcript);
+    final_span.innerHTML = linebreak(final_transcript);
     interim_span.innerHTML = linebreak(interim_transcript);
     if (final_transcript || interim_transcript) {
       showButtons('inline-block');
