@@ -122,7 +122,7 @@ a.c1 {font-weight: normal;}
             Click the microphone icon to start.
           </p>
           <p id="info_speak_now" style="display:none">
-            Speak now.
+            Voice recognition has begun.
           </p>
           <p id="info_no_speech" style="display:none">
             No speech was detected.
@@ -192,6 +192,9 @@ a.c1 {font-weight: normal;}
         <div class="control_selector_wrapper">
           翻訳：
           <div id="google_translate_element" class="select_translation selector"></div>
+          <span id="checkbox_disableUpdate_wrapper" class="selector">
+            認識中文字を非表示（翻訳中はチェック推奨）: <input type="checkbox" id="checkbox_disableUpdate" name="checkbox_disableUpdate" value="disableUpdate" oninput="fnDisableUpdate(this)">
+          </span>
         </div>
       </div>
     </div><script src="//www.google.com/intl/en/chrome/assets/common/js/chrome.min.js" nonce="kzUwpFpzsYclJ72I1Sw5Mg">
@@ -447,6 +450,8 @@ if (!('webkitSpeechRecognition' in window)) {
 
   recognition.onresult = function(event) {
     var interim_transcript = '';
+    let pre_finalTranscript = final_transcript;
+    let cap_finalTranscript;
     if (typeof(event.results) == 'undefined') {
       recognition.onend = null;
       recognition.stop();
@@ -460,10 +465,15 @@ if (!('webkitSpeechRecognition' in window)) {
         interim_transcript += event.results[i][0].transcript;
       }
     }
-    final_transcript = capitalize(final_transcript);
-    final_span.innerHTML = linebreak(final_transcript);
-    interim_span.innerHTML = linebreak(interim_transcript);
-    if (final_transcript || interim_transcript) {
+    if (final_transcript != pre_finalTranscript) {
+      cap_finalTranscript = capitalize(final_transcript)
+      final_span.innerHTML = linebreak(cap_finalTranscript);
+    }
+    // final_transcript = capitalize(final_transcript);
+    if (!disable_update) {
+      interim_span.innerHTML = linebreak(interim_transcript);
+    }
+    if (cap_finalTranscript || interim_transcript) {
       showButtons('inline-block');
     }
   };
@@ -607,6 +617,16 @@ function showButtons(style) {
   copy_info.style.display = 'none';
   email_info.style.display = 'none';
 }
+
+var disable_update = false;
+function fnDisableUpdate(checkbox) {
+  if (checkbox.checked == true) {
+    disable_update = true;
+  }else{
+    disable_update = false;
+  }
+}
+
     </script>
   </body>
 </html>
