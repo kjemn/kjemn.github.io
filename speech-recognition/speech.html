@@ -115,76 +115,76 @@ new gweb.analytics.AutoTrack({
     display: none;
     margin: 0 70px;
     }
-
- /* === スライドスイッチCSS ================================= */
- /* https://webparts.cman.jp/button/onoff/ ===================*/
- /* === ボタンを表示するエリア ============================== */
- .switchArea {
-  line-height    : 60px;                /* 1行の高さ          */
-  letter-spacing : 0;                   /* 文字間             */
-  text-align     : center;              /* 文字位置は中央     */
-  font-size      : 27px;                /* 文字サイズ         */
-
-  position       : relative;            /* 親要素が基点       */
-  margin         : auto;                /* 中央寄せ           */
-  width          : 150px;               /* ボタンの横幅       */
-  background     : #fff;                /* デフォルト背景色   */
-}
-
- /* === チェックボックス ==================================== */
-.switchArea input[type="checkbox"] {
-  display        : none;            /* チェックボックス非表示 */
-}
-
- /* === チェックボックスのラベル（標準） ==================== */
-.switchArea label {
-  display        : block;               /* ボックス要素に変更 */
-  box-sizing     : border-box;          /* 枠線を含んだサイズ */
-  height         : 60px;                /* ボタンの高さ       */
-  border         : 2px solid #999999;   /* 未選択タブのの枠線 */
-  border-radius  : 30px;                /* 角丸               */
-}
-
- /* === チェックボックスのラベル（ONのとき） ================ */
-.switchArea input[type="checkbox"]:checked +label {
-  border-color   : #007fff;             /* 選択タブの枠線     */
-}
-
- /* === 表示する文字（標準） ================================ */
-.switchArea label span:after{
-  content        : "OFF";               /* 表示する文字       */
-  padding        : 0 0 0 36px;          /* 表示する位置       */
-  color          : #999999;             /* 文字色             */
-}
-
- /* === 表示する文字（ONのとき） ============================ */
-.switchArea  input[type="checkbox"]:checked + label span:after{
-  content        : "ON";                /* 表示する文字       */
-  padding        : 0 36px 0 0;          /* 表示する位置       */
-  color          : #007fff;             /* 文字色             */
-}
-
- /* === 丸部分のSTYLE（標準） =============================== */
-.switchArea #swImg {
-  position       : absolute;            /* 親要素からの相対位置*/
-  width          : 52px;                /* 丸の横幅           */
-  height         : 52px;                /* 丸の高さ           */
-  background     : #999999;             /* カーソルタブの背景 */
-  top            : 4px;                 /* 親要素からの位置   */
-  left           : 4px;                 /* 親要素からの位置   */
-  border-radius  : 26px;                /* 角丸               */
-  transition     : .2s;                 /* 滑らか変化         */
-}
-
- /* === 丸部分のSTYLE（ONのとき） =========================== */
-.switchArea input[type="checkbox"]:checked ~ #swImg {
-  transform      : translateX(90px);    /* 丸も右へ移動       */
-  background     : #007fff;             /* カーソルタブの背景 */
-}
-
     </style>
     <style>
 a.c1 {font-weight: normal;}
+    </style>
+    <style type="text/css">
+    /* === スライドスイッチCSS ================================= */
+    /* https://webparts.cman.jp/button/onoff/ ===================*/
+    /* === ボタンを表示するエリア ============================== */
+    .switchArea {
+      line-height    : 60px;                /* 1行の高さ          */
+      letter-spacing : 0;                   /* 文字間             */
+      text-align     : center;              /* 文字位置は中央     */
+      font-size      : 27px;                /* 文字サイズ         */
+
+      position       : relative;            /* 親要素が基点       */
+      margin         : auto;                /* 中央寄せ           */
+      width          : 150px;               /* ボタンの横幅       */
+      background     : #fff;                /* デフォルト背景色   */
+    }
+
+    /* === チェックボックス ==================================== */
+    .switchArea input[type="checkbox"] {
+      display        : none;            /* チェックボックス非表示 */
+    }
+
+    /* === チェックボックスのラベル（標準） ==================== */
+    .switchArea label {
+      display        : block;               /* ボックス要素に変更 */
+      box-sizing     : border-box;          /* 枠線を含んだサイズ */
+      height         : 60px;                /* ボタンの高さ       */
+      border         : 2px solid #999999;   /* 未選択タブのの枠線 */
+      border-radius  : 30px;                /* 角丸               */
+    }
+
+    /* === チェックボックスのラベル（ONのとき） ================ */
+    .switchArea input[type="checkbox"]:checked +label {
+      border-color   : #007fff;             /* 選択タブの枠線     */
+    }
+
+    /* === 表示する文字（標準） ================================ */
+    .switchArea label span:after{
+      content        : "OFF";               /* 表示する文字       */
+      padding        : 0 0 0 36px;          /* 表示する位置       */
+      color          : #999999;             /* 文字色             */
+    }
+
+    /* === 表示する文字（ONのとき） ============================ */
+    .switchArea  input[type="checkbox"]:checked + label span:after{
+      content        : "ON";                /* 表示する文字       */
+      padding        : 0 36px 0 0;          /* 表示する位置       */
+      color          : #007fff;             /* 文字色             */
+    }
+
+    /* === 丸部分のSTYLE（標準） =============================== */
+    .switchArea #swImg {
+      position       : absolute;            /* 親要素からの相対位置*/
+      width          : 52px;                /* 丸の横幅           */
+      height         : 52px;                /* 丸の高さ           */
+      background     : #999999;             /* カーソルタブの背景 */
+      top            : 4px;                 /* 親要素からの位置   */
+      left           : 4px;                 /* 親要素からの位置   */
+      border-radius  : 26px;                /* 角丸               */
+      transition     : .2s;                 /* 滑らか変化         */
+    }
+
+    /* === 丸部分のSTYLE（ONのとき） =========================== */
+    .switchArea input[type="checkbox"]:checked ~ #swImg {
+      transform      : translateX(90px);    /* 丸も右へ移動       */
+      background     : #007fff;             /* カーソルタブの背景 */
+    }
     </style>
   </head>
   <body class="" id="grid">
@@ -273,7 +273,7 @@ a.c1 {font-weight: normal;}
         </div>
         <div class="control_selector_wrapper">
           翻訳：<div id="google_translate_element" class="select_translation selector"></div>
-          <span id="checkbox_disableUpdate_wrapper" class="selector">
+          <span>
             未確定文を非表示（翻訳中チェック推奨）: 
             <!-- <input type="checkbox" id="checkbox_disableUpdate" name="checkbox_disableUpdate" value="disableUpdate" oninput="fnDisableUpdate(this)"> -->
             <div id="switchArea">
