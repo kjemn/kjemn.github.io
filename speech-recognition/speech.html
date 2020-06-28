@@ -486,9 +486,11 @@ var enableRestart = true;
 // 参考: https://pisuke-code.com/js-usage-of-google-trans-api/
 function googleTranslateElementInit() {
     new google.translate.TranslateElement({ 
-            pageLanguage: 'en,gb', 
-            includedLanguages: 'ja,en',
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE //.HORIZONTAL
+            pageLanguage: 'en,gb',      // Webサイトの言語
+            includedLanguages: 'ja,en', // 翻訳する言語
+            layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL, // 表示モード  or SIMPLE
+            autoDisplay: true,          // 翻訳バナーを自動的に表示するか
+            multilanguagePage: true     // コンテンツに複数の言語が含まれているか
         }, 'google_translate_element');
 }
 
