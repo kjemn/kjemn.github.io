@@ -193,7 +193,7 @@ a.c1 {font-weight: normal;}
   </head>
   <body class="" id="grid">
     <div class="browser-landing" id="main">
-      <div class="compact marquee-stacked" id="marquee">
+      <div class="compact marquee-stacked notranslate" id="marquee">
         <div class="marquee-copy">
           <h1>
             Speech recognition Powered by <a class="c1" href="https://wicg.github.io/speech-api/">Web
@@ -202,7 +202,7 @@ a.c1 {font-weight: normal;}
         </div>
       </div>
       <div class="compact marquee">
-        <div id="info">
+        <div id="info" class="notranslate">
           <p id="info_start">
             <!-- Click on the microphone icon and begin speaking for as long as you like. -->
             Click the microphone icon to start.
@@ -246,11 +246,23 @@ a.c1 {font-weight: normal;}
           <button id="start_button" onclick="startButton(event)"><img alt="Start" id="start_img"
             src="//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"></button>
         </div>
-        <!-- <div id="scroll">
-          <button onclick="scrollButton()">Auto
-            Scroll</button>
-        </div> -->
-        <div id="copy">
+        <div class="compact marquee notranslate" id="div_language">
+          <select id="select_language" onchange="updateCountry()">
+            </select>&nbsp;&nbsp; <select id="select_dialect">
+            </select>
+        </div>
+        <div class="control_selector_wrapper notranslate">
+          <span>
+            翻訳（Beta）
+            <div id="switchArea">
+              <input type="checkbox" id="switch1" oninput="fnDisableUpdate(this)">
+              <label for="switch1"><span></span></label>
+              <div id="swImg"></div>
+            </div>
+            <div id="google_translate_element" class="select_translation selector"></div>
+          </span>
+        </div>
+        <div id="copy" class="notranslate">
           <button class="button" id="copy_button" onclick="copyButton()">Copy and Paste</button>
           <div id="copy_info">
             <p>
@@ -269,22 +281,6 @@ a.c1 {font-weight: normal;}
               (See chrome://settings/handlers to change.)
             </p>
           </div>
-        </div>
-        <div class="compact marquee" id="div_language">
-          <select id="select_language" onchange="updateCountry()">
-            </select>&nbsp;&nbsp; <select id="select_dialect">
-            </select>
-        </div>
-        <div class="control_selector_wrapper">
-          <span>
-            翻訳　
-            <div id="switchArea">
-              <input type="checkbox" id="switch1" oninput="fnDisableUpdate(this)">
-              <label for="switch1"><span></span></label>
-              <div id="swImg"></div>
-            </div>
-            <div id="google_translate_element" class="select_translation selector"></div>
-          </span>
         </div>
       </div>
     </div><script src="//www.google.com/intl/en/chrome/assets/common/js/chrome.min.js" nonce="kzUwpFpzsYclJ72I1Sw5Mg">
@@ -453,7 +449,8 @@ var enableRestart = true;
 // 参考: https://pisuke-code.com/js-usage-of-google-trans-api/
 function googleTranslateElementInit() {
     new google.translate.TranslateElement({ 
-            pageLanguage: 'en', 
+            pageLanguage: 'en,gb', 
+            includedLanguages: 'ja,en',
             layout: google.translate.TranslateElement.InlineLayout.SIMPLE //.HORIZONTAL
         }, 'google_translate_element');
 }
