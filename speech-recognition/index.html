@@ -91,6 +91,17 @@ new gweb.analytics.AutoTrack({
     display: none;
     margin: 0 70px;
     }
+    .ddList {
+      height: 24px;
+      background-color: #fff;
+      border: 1px solid #999999;
+      border-radius: 4px;
+      color: #666;
+      white-space: nowrap;
+      font: 13px/18px 'Open Sans', arial, sans-serif;
+      font-size: 13px;
+      line-height: 18px;
+    }
     </style>
     <style>
 a.c1 {font-weight: normal;}
@@ -232,9 +243,9 @@ a.c1 {font-weight: normal;}
             src="//www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"></button>
         </div>
         <div class="compact marquee notranslate" id="div_language">
-          <select id="select_language" onchange="updateCountry()">
-            </select>&nbsp;&nbsp; <select id="select_dialect">
-            </select>
+          <select id="select_language" class="ddList" onchange="updateCountry()">
+          </select>&nbsp;&nbsp; 
+          <select id="select_dialect" class="ddList"></select>
         </div>
         <div class="control_selector_wrapper notranslate">
           <span>
