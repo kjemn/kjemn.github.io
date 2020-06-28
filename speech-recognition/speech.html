@@ -192,6 +192,10 @@ a.c1 {font-weight: normal;}
           翻訳：<div id="google_translate_element" class="select_translation selector"></div>
           <span id="checkbox_disableUpdate_wrapper" class="selector">
             未確定文を非表示（翻訳中チェック推奨）: <input type="checkbox" id="checkbox_disableUpdate" name="checkbox_disableUpdate" value="disableUpdate" oninput="fnDisableUpdate(this)">
+            <button type="button" velue="false" id="noUpdate_button" onclick="noUpdateButton()">翻訳中の更新を止める</button>
+            <form name="test" method="post">
+              <input type="text" name="savereport" value="False" />
+            </form>
           </span>
         </div>
       </div>
@@ -362,7 +366,7 @@ var enableRestart = true;
 function googleTranslateElementInit() {
     new google.translate.TranslateElement({ 
             pageLanguage: 'en', 
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE //.HORIZONTAL
         }, 'google_translate_element');
 }
 
@@ -622,6 +626,18 @@ function fnDisableUpdate(checkbox) {
     disable_update = true;
   }else{
     disable_update = false;
+  }
+}
+
+function noUpdateButton() {
+  var change = document.getElementById("noUpdate_button");
+  if (change.value == "false") {
+    disable_upcate = false;
+    document.test.elements["savereport"].value = "True";
+    //document.test.submit();
+  } else {
+    disable_update = true;
+    change.value = "true";
   }
 }
 
