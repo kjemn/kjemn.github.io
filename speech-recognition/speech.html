@@ -576,6 +576,7 @@ if (!('webkitSpeechRecognition' in window)) {
   };
 
   recognition.onresult = function(event) {
+    console.log("IN: onresult") // DEBUG
     var interim_transcript = '';
     let pre_finalTranscript = final_transcript;
     let cap_finalTranscript;
@@ -608,6 +609,7 @@ if (!('webkitSpeechRecognition' in window)) {
     if (cap_finalTranscript || interim_transcript) {
       showButtons('inline-block');
     }
+    console.log("OUT: onresult") // DEBUG
   };
 }
 
