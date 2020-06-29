@@ -323,6 +323,19 @@ a.c1 {font-weight: normal;}
       </div>
     </div><script src="//www.google.com/intl/en/chrome/assets/common/js/chrome.min.js" nonce="kzUwpFpzsYclJ72I1Sw5Mg">
 </script> <script nonce="kzUwpFpzsYclJ72I1Sw5Mg">
+
+var smart_phone;
+function isSmartPhone() {
+  if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+smart_phone = isSmartPhone();
+console.log("smart_phone = " + smart_phone) // DEBUG
+
 var chrmMenuBar = new chrm.ui.MenuBar();
       chrmMenuBar.decorate('nav');
       var chrmLogo = new chrm.ui.Logo('logo');
@@ -589,7 +602,7 @@ if (!('webkitSpeechRecognition' in window)) {
     for (var i = event.resultIndex; i < event.results.length; ++i) {
       if (event.results[i].isFinal) {
         final_transcript += capitalize(event.results[i][0].transcript) + '.';
-        console.log("final_transcript += " + event.results[i][0].transcript + '.') // DEBUG
+        console.log("final_transcript += " + capitalize(event.results[i][0].transcript) + '.') // DEBUG
       } else {
         interim_transcript += event.results[i][0].transcript;
         console.log("interim_transcript += " + event.results[i][0].transcript) // DEBUG
@@ -762,6 +775,8 @@ function fnDisableUpdate(checkbox) {
     disable_update = false;
   }
 }
+
+
 
     </script>
   </body>
