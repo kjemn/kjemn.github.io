@@ -324,17 +324,16 @@ a.c1 {font-weight: normal;}
     </div><script src="//www.google.com/intl/en/chrome/assets/common/js/chrome.min.js" nonce="kzUwpFpzsYclJ72I1Sw5Mg">
 </script> <script nonce="kzUwpFpzsYclJ72I1Sw5Mg">
 
-var smart_phone;
-function isSmartPhone() {
+var isSmartPhone = (function () {
+  console.log("userAgent = " + navigator.userAgent) // DEBUG
   if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
     return true;
   } else {
     return false;
   }
-}
+}(1));
 
-smart_phone = isSmartPhone();
-console.log("smart_phone = " + smart_phone) // DEBUG
+console.log("isSmartPhone = " + isSmartPhone) // DEBUG
 
 var chrmMenuBar = new chrm.ui.MenuBar();
       chrmMenuBar.decorate('nav');
@@ -599,28 +598,43 @@ if (!('webkitSpeechRecognition' in window)) {
       upgrade();
       return;
     }
-    for (var i = event.resultIndex; i < event.results.length; ++i) {
-      if (event.results[i].isFinal) {
-        final_transcript += capitalize(event.results[i][0].transcript) + '.';
-        console.log("final_transcript += " + capitalize(event.results[i][0].transcript) + '.') // DEBUG
-      } else {
-        interim_transcript += event.results[i][0].transcript;
-        console.log("interim_transcript += " + event.results[i][0].transcript) // DEBUG
+    if (!isSmartPhone) {
+      for (var i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          final_transcript += capitalize(event.results[i][0].transcript) + '.';
+          console.log("final_transcript += " + capitalize(event.results[i][0].transcript) + '.') // DEBUG
+        } else {
+          interim_transcript += event.results[i][0].transcript;
+          console.log("interim_transcript += " + event.results[i][0].transcript) // DEBUG
+        }
+      }
+      if (final_transcript != pre_finalTranscript) {
+        final_span.innerHTML = linebreak(final_transcript);
+        console.log("final_span.innerHTML = " + final_span.innerHTML) // DEBUG
+      }
+      if (!disable_update) {
+        interim_span.innerHTML = linebreak(interim_transcript);
+        console.log("interim_span.innerHTML = " + interim_span.innerHTML) // DEBUG
+      }
+    } else {
+      for (var i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          final_transcript += capitalize(event.results[i][0].transcript) + '.';
+          console.log("final_transcript += " + capitalize(event.results[i][0].transcript) + '.') // DEBUG
+        } else {
+          interim_transcript += event.results[i][0].transcript;
+          console.log("interim_transcript += " + event.results[i][0].transcript) // DEBUG
+        }
+      }
+      if (final_transcript != pre_finalTranscript) {
+        final_span.innerHTML = linebreak(final_transcript);
+        console.log("final_span.innerHTML = " + final_span.innerHTML) // DEBUG
+      }
+      if (!disable_update) {
+        interim_span.innerHTML = linebreak(interim_transcript);
+        console.log("interim_span.innerHTML = " + interim_span.innerHTML) // DEBUG
       }
     }
-    if (final_transcript != pre_finalTranscript) {
-      // cap_finalTranscript = capitalize(final_transcript)
-      // console.log("cap_finalTranscript = " + cap_finalTranscript) // DEBUG
-      // final_span.innerHTML = linebreak(cap_finalTranscript);
-      final_span.innerHTML = linebreak(final_transcript);
-      console.log("final_span.innerHTML = " + final_span.innerHTML) // DEBUG
-    }
-    // final_transcript = capitalize(final_transcript);
-    if (!disable_update) {
-      interim_span.innerHTML = linebreak(interim_transcript);
-      console.log("interim_span.innerHTML = " + interim_span.innerHTML) // DEBUG
-    }
-    // if (cap_finalTranscript || interim_transcript) {
     if (final_transcript || interim_transcript) {
       showButtons('inline-block');
     }
