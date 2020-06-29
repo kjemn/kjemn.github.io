@@ -326,7 +326,7 @@ a.c1 {font-weight: normal;}
 
 var isSmartPhone = (function () {
   console.log("userAgent = " + navigator.userAgent) // DEBUG
-  if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
+  if (navigator.userAgent.match(/iPhone|Android/)) {
     return true;
   } else {
     return false;
