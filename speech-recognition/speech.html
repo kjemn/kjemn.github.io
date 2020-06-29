@@ -588,17 +588,22 @@ if (!('webkitSpeechRecognition' in window)) {
     for (var i = event.resultIndex; i < event.results.length; ++i) {
       if (event.results[i].isFinal) {
         final_transcript += event.results[i][0].transcript + '.';
+        console.log("final_transcript += " + event.results[i][0].transcript + '.') // DEBUG
       } else {
         interim_transcript += event.results[i][0].transcript;
+        console.log("interim_transcript += " + event.results[i][0].transcript) // DEBUG
       }
     }
     if (final_transcript != pre_finalTranscript) {
       cap_finalTranscript = capitalize(final_transcript)
+      console.log("cap_finalTranscript = " + cap_finalTranscript) // DEBUG
       final_span.innerHTML = linebreak(cap_finalTranscript);
+      console.log("final_span.innerHTML = " + final_span.innerHTML) // DEBUG
     }
     // final_transcript = capitalize(final_transcript);
     if (!disable_update) {
       interim_span.innerHTML = linebreak(interim_transcript);
+      console.log("interim_span.innerHTML = " + interim_span.innerHTML) // DEBUG
     }
     if (cap_finalTranscript || interim_transcript) {
       showButtons('inline-block');
