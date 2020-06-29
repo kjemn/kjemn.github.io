@@ -579,7 +579,7 @@ if (!('webkitSpeechRecognition' in window)) {
     console.log("IN: onresult") // DEBUG
     var interim_transcript = '';
     let pre_finalTranscript = final_transcript;
-    let cap_finalTranscript;
+    // let cap_finalTranscript;
     if (typeof(event.results) == 'undefined') {
       recognition.onend = null;
       recognition.stop();
@@ -588,7 +588,7 @@ if (!('webkitSpeechRecognition' in window)) {
     }
     for (var i = event.resultIndex; i < event.results.length; ++i) {
       if (event.results[i].isFinal) {
-        final_transcript += event.results[i][0].transcript + '.';
+        final_transcript += capitalize(event.results[i][0].transcript) + '.';
         console.log("final_transcript += " + event.results[i][0].transcript + '.') // DEBUG
       } else {
         interim_transcript += event.results[i][0].transcript;
@@ -596,9 +596,10 @@ if (!('webkitSpeechRecognition' in window)) {
       }
     }
     if (final_transcript != pre_finalTranscript) {
-      cap_finalTranscript = capitalize(final_transcript)
-      console.log("cap_finalTranscript = " + cap_finalTranscript) // DEBUG
-      final_span.innerHTML = linebreak(cap_finalTranscript);
+      // cap_finalTranscript = capitalize(final_transcript)
+      // console.log("cap_finalTranscript = " + cap_finalTranscript) // DEBUG
+      // final_span.innerHTML = linebreak(cap_finalTranscript);
+      final_span.innerHTML = linebreak(final_transcript);
       console.log("final_span.innerHTML = " + final_span.innerHTML) // DEBUG
     }
     // final_transcript = capitalize(final_transcript);
@@ -606,7 +607,8 @@ if (!('webkitSpeechRecognition' in window)) {
       interim_span.innerHTML = linebreak(interim_transcript);
       console.log("interim_span.innerHTML = " + interim_span.innerHTML) // DEBUG
     }
-    if (cap_finalTranscript || interim_transcript) {
+    // if (cap_finalTranscript || interim_transcript) {
+    if (final_transcript || interim_transcript) {
       showButtons('inline-block');
     }
     console.log("OUT: onresult") // DEBUG
