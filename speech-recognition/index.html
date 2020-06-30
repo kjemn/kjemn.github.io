@@ -18,20 +18,12 @@
     <title>
       Speech Recognition
     </title>
-    <link href="https://plus.google.com/100585555255542998765" rel="publisher">
     <link href="//www.google.com/images/icons/product/chrome-32.png" rel="icon" type="image/ico">
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin" rel=
-    "stylesheet" nonce="kzUwpFpzsYclJ72I1Sw5Mg">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin" rel="stylesheet" nonce="kzUwpFpzsYclJ72I1Sw5Mg">
     <link href="/speech-recognition/css/chrome.min.css" rel="stylesheet">
-    <script src="//www.google.com/js/gweb/analytics/autotrack.js" nonce="kzUwpFpzsYclJ72I1Sw5Mg">
 </script>
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    <script nonce="kzUwpFpzsYclJ72I1Sw5Mg">
-new gweb.analytics.AutoTrack({
-          profile: 'UA-26908291-1'
-        });
-    </script>
     <style>
     #marquee h1 {
       font-size: 16px;
@@ -123,7 +115,7 @@ a.c1 {font-weight: normal;}
     }
     .goog-te-gadget-simple .goog-te-menu-value
     {
-        color: #000;
+        color: #666;
         font: 13px/18px 'Open Sans', arial, sans-serif;
         font-style: normal;
         font-variant-ligatures: normal;
@@ -138,13 +130,13 @@ a.c1 {font-weight: normal;}
     }
     #switchArea {
       line-height    : 20px; 
-      letter-spacing : 0; 
+      letter-spacing : 0;
       text-align     : center;
-      font-size      : 11px; 
+      font-size      : 13px;
 
-      position       : relative; 
-      margin         : auto; 
-      width          : 50px;
+      position       : relative;
+      margin         : auto;
+      width          : 60px;
       background     : #fff;
       display        : inline-block
     }
@@ -182,7 +174,7 @@ a.c1 {font-weight: normal;}
       transition     : .2s;
     }
     #switchArea input[type="checkbox"]:checked ~ #swImg {
-      transform      : translateX(26px);
+      transform      : translateX(36px);
       background     : #007fff;
     }
     </style>
@@ -248,15 +240,20 @@ a.c1 {font-weight: normal;}
           <select id="select_dialect" class="ddList"></select>
         </div>
         <div class="control_selector_wrapper notranslate">
-          <span>
-            翻訳(Beta)：
-            <div id="google_translate_element" class="select_translation selector"></div>
-            　文章単位：
+          <div class="compact marquee notranslate">
+            <span>
+              翻訳(Beta)：
+              <div id="google_translate_element" class="select_translation selector"></div>
+            </span>
+          </div>
+          <div class="compact marquee notranslate">
+              　暫定結果を表示しない：
             <div id="switchArea">
               <input type="checkbox" id="switch1" oninput="fnDisableUpdate(this)">
               <label for="switch1"><span></span></label>
               <div id="swImg"></div>
             </div>
+          </div>
         </div>
         <div id="copy" class="notranslate">
           <button class="button" id="copy_button" onclick="copyButton()">Copy and Paste</button>
@@ -267,8 +264,7 @@ a.c1 {font-weight: normal;}
             <p>
               (Command-C on Mac.)
             </p>
-          </div><button class="button" id="email_button" onclick="emailButton()">Create
-          Email</button>
+          </div>
           <div id="email_info">
             <p>
               Text sent to default email application.
@@ -281,6 +277,16 @@ a.c1 {font-weight: normal;}
       </div>
     </div><script src="//www.google.com/intl/en/chrome/assets/common/js/chrome.min.js" nonce="kzUwpFpzsYclJ72I1Sw5Mg">
 </script> <script nonce="kzUwpFpzsYclJ72I1Sw5Mg">
+
+var isSmartPhone = (function () {
+  if (navigator.userAgent.match(/iPhone|Android/)) {
+    return true;
+  } else {
+    return false;
+  }
+}(1));
+
+
 var chrmMenuBar = new chrm.ui.MenuBar();
       chrmMenuBar.decorate('nav');
       var chrmLogo = new chrm.ui.Logo('logo');
@@ -455,7 +461,11 @@ if (!('webkitSpeechRecognition' in window)) {
   start_button.style.display = 'inline-block';
   var recognition = new webkitSpeechRecognition();
   recognition.continuous = true;
-  recognition.interimResults = true;
+  if (!isSmartPhone) {
+    recognition.interimResults = true;
+  } else {
+    recognition.interimResults = false;
+  }
 
   recognition.onstart = function() {
     recognizing = true;
@@ -503,11 +513,13 @@ if (!('webkitSpeechRecognition' in window)) {
       autoStart()
     }
     if (!enableRestart) {
-      if (window.getSelection) {
-        window.getSelection().removeAllRanges();
-        var range = document.createRange();
-        range.selectNode(document.getElementById('past_span'));
-        window.getSelection().addRange(range);
+      if (!isSmartPhone) {
+        if (window.getSelection) {
+          window.getSelection().removeAllRanges();
+          var range = document.createRange();
+          range.selectNode(document.getElementById('past_span'));
+          window.getSelection().addRange(range);
+        }
       }
       if (create_email) {
         create_email = false;
@@ -520,28 +532,42 @@ if (!('webkitSpeechRecognition' in window)) {
   recognition.onresult = function(event) {
     var interim_transcript = '';
     let pre_finalTranscript = final_transcript;
-    let cap_finalTranscript;
     if (typeof(event.results) == 'undefined') {
       recognition.onend = null;
       recognition.stop();
       upgrade();
       return;
     }
-    for (var i = event.resultIndex; i < event.results.length; ++i) {
-      if (event.results[i].isFinal) {
-        final_transcript += event.results[i][0].transcript + '.';
-      } else {
-        interim_transcript += event.results[i][0].transcript;
+    if (isSmartPhone) {
+      for (var i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          final_transcript = capitalize(event.results[i][0].transcript);
+        } else {
+          interim_transcript += event.results[i][0].transcript;
+        }
+      }
+      if (final_transcript != pre_finalTranscript) {
+        final_span.innerHTML = linebreak(final_transcript);
+      }
+      if (!disable_update) {
+        interim_span.innerHTML = linebreak(interim_transcript);
+      }
+    } else {
+      for (var i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          final_transcript += capitalize(event.results[i][0].transcript) + '.';
+        } else {
+          interim_transcript += event.results[i][0].transcript;
+        }
+      }
+      if (final_transcript != pre_finalTranscript) {
+        final_span.innerHTML = linebreak(final_transcript);
+      }
+      if (!disable_update) {
+        interim_span.innerHTML = linebreak(interim_transcript);
       }
     }
-    if (final_transcript != pre_finalTranscript) {
-      cap_finalTranscript = capitalize(final_transcript)
-      final_span.innerHTML = linebreak(cap_finalTranscript);
-    }
-    if (!disable_update) {
-      interim_span.innerHTML = linebreak(interim_transcript);
-    }
-    if (cap_finalTranscript || interim_transcript) {
+    if (final_transcript || interim_transcript) {
       showButtons('inline-block');
     }
   };
@@ -650,9 +676,7 @@ function showButtons(style) {
   }
   current_style = style;
   copy_button.style.display = style;
-  email_button.style.display = style;
   copy_info.style.display = 'none';
-  email_info.style.display = 'none';
 }
 
 var disable_update = false;
