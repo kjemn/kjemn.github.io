@@ -598,11 +598,11 @@ if (!('webkitSpeechRecognition' in window)) {
       upgrade();
       return;
     }
-    if (!isSmartPhone) {
+    if (isSmartPhone) {
       for (var i = event.resultIndex; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
-          final_transcript += capitalize(event.results[i][0].transcript) + '.';
-          console.log("final_transcript += " + capitalize(event.results[i][0].transcript) + '.') // DEBUG
+          final_transcript = capitalize(event.results[i][0].transcript);
+          console.log("final_transcript = " + capitalize(event.results[i][0].transcript)) // DEBUG
         } else {
           interim_transcript += event.results[i][0].transcript;
           console.log("interim_transcript += " + event.results[i][0].transcript) // DEBUG
